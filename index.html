@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mini Studio · курс</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: "ink & champagne gold" sales page. Two-column hero (promise + live phone showing the funnel), pain → turn → path → program → bonus → price, sticky buy bar on phones. Deliberate single dark look. */
+:root{
+  --ink:#0c0b0a; --ink-2:#151311; --ink-3:#1e1b18; --ink-4:#2a2621;
+  --ivory:#f3ebdc; --muted:#a89f90; --dim:#7a7266; --gold:#c9a96e; --gold-2:#e8d3a6; --line:rgba(201,169,110,.26);
+  --ig:#e8e3da; --tg:#1c2733; --tg-b:#2b5278;
+  --f-display:"Cormorant Garamond","Playfair Display",Georgia,"Times New Roman",serif;
+  --f-body:"Manrope",-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important}}
+body{background:var(--ink);color:var(--ivory);font-family:var(--f-body);font-size:17px;line-height:1.6;padding-inline:20px;padding-block:0 110px}
+.wrap{max-width:1040px;margin-inline:auto;display:flex;flex-direction:column;gap:110px}
+.narrow{max-width:740px;width:100%;margin-inline:auto}
+a{color:var(--gold-2)}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:var(--gold)}
+h1,h2,h3{font-family:var(--f-display);font-weight:500;margin:0;text-wrap:balance;color:var(--ivory)}
+h1{font-size:clamp(44px,8.6vw,84px);line-height:.98;letter-spacing:-.015em}
+h2{font-size:clamp(36px,6.4vw,58px);line-height:1.02}
+h3{font-size:27px;line-height:1.15}
+em{font-style:italic;color:var(--gold-2)}
+p{margin:0;text-wrap:pretty}
+.lead{color:var(--muted);font-size:19px}
+section{display:flex;flex-direction:column;gap:26px;min-width:0}
+.sec-head{display:flex;flex-direction:column;gap:14px}
+
+/* header */
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:22px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ivory)}
+.ms{width:44px;height:44px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-weight:600;font-size:18px;color:var(--gold);flex:none}
+.brand span{font-size:12px;letter-spacing:.3em;text-transform:uppercase}
+nav{display:flex;gap:22px}
+nav a{font-size:14px;color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--gold-2)}
+@media (max-width:640px){nav a:not(.keep){display:none}}
+
+/* buttons */
+.actions{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:58px;padding:16px 30px;border-radius:2px;font-weight:800;font-size:15px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;text-align:center;cursor:pointer;transition:background .2s,box-shadow .2s}
+.btn.gold{background:linear-gradient(180deg,var(--gold-2),var(--gold));color:var(--ink);box-shadow:0 10px 40px rgba(201,169,110,.18)}
+.btn.gold:hover{box-shadow:0 10px 50px rgba(201,169,110,.35)}
+.btn.ghost{border:1px solid var(--gold);color:var(--gold-2)}
+.btn.ghost:hover{background:rgba(201,169,110,.08)}
+.note{font-size:14px;color:var(--dim)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:48px;align-items:center;padding-top:46px}
+.hero-copy{display:flex;flex-direction:column;gap:26px;min-width:0}
+.hero .lead{font-size:20px;max-width:30em}
+.ticks{list-style:none;padding:0;margin:0;display:grid;gap:8px;font-size:16px}
+.ticks li{display:grid;grid-template-columns:20px 1fr;gap:10px}
+.ticks li::before{content:"✦";color:var(--gold);font-size:12px;padding-top:5px}
+@media (max-width:860px){.hero{grid-template-columns:1fr}.phone-wrap{order:2}}
+
+/* phone mock: the funnel in motion */
+.phone-wrap{display:flex;justify-content:center;min-width:0}
+.phone{width:min(330px,100%);border-radius:38px;border:1px solid var(--line);background:#0f0e0d;padding:12px;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 6px #171513;position:relative}
+.screen{border-radius:28px;background:#121110;overflow:hidden;display:flex;flex-direction:column}
+.ph-top{display:flex;align-items:center;gap:10px;padding:14px 14px 10px;border-bottom:1px solid #24211d}
+.ph-top .av{width:30px;height:30px;border-radius:50%;border:1px solid var(--gold);display:grid;place-items:center;font-family:var(--f-display);font-size:12px;color:var(--gold)}
+.ph-top b{font-size:13px}.ph-top small{display:block;font-size:11px;color:var(--dim)}
+.chat{display:flex;flex-direction:column;gap:9px;padding:14px 12px 16px;font-size:13px;line-height:1.4}
+.step{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);text-align:center;margin-top:4px}
+.b{max-width:85%;padding:9px 12px;border-radius:16px}
+.b.me{align-self:flex-end;background:var(--ig);color:#1a1815;border-bottom-right-radius:4px;font-weight:700}
+.b.bot{align-self:flex-start;background:var(--ink-4);border-bottom-left-radius:4px}
+.b.tg{align-self:flex-start;background:var(--tg);border-bottom-left-radius:4px}
+.b .k{display:block;margin-top:8px;text-align:center;border:1px solid var(--gold);color:var(--gold-2);border-radius:8px;padding:6px;font-weight:700;font-size:12px}
+.b.tg .k{border-color:var(--tg-b);background:var(--tg-b);color:#fff}
+.chat > *{opacity:0;transform:translateY(6px);animation:in .5s ease forwards}
+.chat > *:nth-child(1){animation-delay:.3s}.chat > *:nth-child(2){animation-delay:.9s}.chat > *:nth-child(3){animation-delay:1.6s}.chat > *:nth-child(4){animation-delay:2.3s}.chat > *:nth-child(5){animation-delay:3s}.chat > *:nth-child(6){animation-delay:3.7s}
+@keyframes in{to{opacity:1;transform:none}}
+.ph-cap{font-size:12px;color:var(--dim);text-align:center;margin-top:12px}
+
+/* marquee facts */
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.facts div{padding:22px 8px;display:flex;flex-direction:column;gap:4px;align-items:center;text-align:center}
+.facts div+div{border-left:1px solid var(--line)}
+.facts b{font-family:var(--f-display);font-weight:500;font-size:44px;line-height:1;color:var(--gold-2);font-variant-numeric:lining-nums}
+.facts span{font-size:13px;color:var(--muted);line-height:1.3}
+@media (max-width:620px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}.facts div:nth-child(3){border-left:0}.facts div:nth-child(n+3){border-top:1px solid var(--line)}}
+
+/* pain */
+.pain{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.pain div{background:var(--ink-2);border:1px solid var(--line);padding:22px 22px 20px;font-size:16.5px;color:var(--ivory);position:relative}
+.pain div::before{content:"«";font-family:var(--f-display);font-size:54px;line-height:.6;color:var(--gold);display:block;margin-bottom:8px}
+@media (max-width:620px){.pain{grid-template-columns:1fr}}
+.turn{font-family:var(--f-display);font-size:clamp(28px,4.6vw,40px);line-height:1.2;text-align:center;max-width:22em;margin-inline:auto}
+
+/* before / after */
+.ba{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid var(--line)}
+.ba > div{padding:28px 24px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.ba > div + div{border-left:1px solid var(--line);background:linear-gradient(180deg,rgba(201,169,110,.08),transparent)}
+.ba h3{font-size:24px}
+.ba ul{list-style:none;padding:0;margin:0;display:grid;gap:10px;font-size:16px}
+.ba li{display:grid;grid-template-columns:18px 1fr;gap:10px}
+.ba .was li{color:var(--muted)}.ba .was li::before{content:"—";color:var(--dim)}
+.ba .now li::before{content:"✦";color:var(--gold);font-size:12px;padding-top:5px}
+@media (max-width:620px){.ba{grid-template-columns:1fr}.ba > div + div{border-left:0;border-top:1px solid var(--line)}}
+
+/* path */
+.path{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--gold)}
+.path li{padding:22px 18px 0 0;display:flex;flex-direction:column;gap:8px;position:relative}
+.path li::before{content:"";position:absolute;top:-5px;left:0;width:9px;height:9px;border-radius:50%;background:var(--gold)}
+.path .n{font-family:var(--f-display);font-size:40px;line-height:1;color:var(--gold)}
+.path b{font-weight:700;font-size:17px}
+.path p{color:var(--muted);font-size:15px}
+@media (max-width:820px){.path{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:28px}}
+@media (max-width:460px){.path{grid-template-columns:1fr}}
+
+/* program */
+.prog{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:760px){.prog{grid-template-columns:1fr}}
+.group{grid-column:1/-1;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-top:18px;display:flex;align-items:center;gap:14px}
+.group::after{content:"";flex:1;height:1px;background:var(--line)}
+.group:first-child{margin-top:0}
+.mod{background:var(--ink-2);border:1px solid var(--line)}
+.mod[open]{border-color:var(--gold)}
+.mod summary{list-style:none;cursor:pointer;padding:20px 20px;display:grid;grid-template-columns:1fr 24px;gap:6px 12px;align-items:start}
+.mod summary::-webkit-details-marker{display:none}
+.mod .code{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);grid-column:1}
+.mod .t{font-family:var(--f-display);font-size:25px;line-height:1.12;grid-column:1}
+.mod .r{font-size:14.5px;color:var(--muted);grid-column:1}
+.mod .plus{grid-column:2;grid-row:1/4;color:var(--gold);font-size:24px;line-height:1;transition:transform .2s}
+.mod[open] .plus{transform:rotate(45deg)}
+.mod ol{margin:0;padding:0 20px 20px 40px;display:grid;gap:7px;color:var(--ivory);font-size:15.5px}
+.mod ol li::marker{color:var(--gold);font-weight:700}
+
+/* tracks */
+.tracks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.track{border:1px solid var(--line);padding:30px 26px;display:flex;flex-direction:column;gap:12px;background:radial-gradient(120% 90% at 0% 0%,#211d18,var(--ink-2) 70%)}
+.track .tag{font-family:var(--f-display);font-size:56px;line-height:1;color:var(--gold)}
+.track p{color:var(--muted);font-size:16px}
+@media (max-width:620px){.tracks{grid-template-columns:1fr}}
+
+/* get grid */
+.get{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.get div{padding:24px 20px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+.get b{font-family:var(--f-display);font-weight:600;font-size:23px;color:var(--gold-2);line-height:1.15}
+.get span{color:var(--muted);font-size:15px}
+@media (max-width:760px){.get{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:460px){.get{grid-template-columns:1fr}}
+
+/* bonus */
+.bonus{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:32px;align-items:center;border:1px solid var(--gold);padding:34px 30px;background:var(--ink-2);position:relative}
+.bonus .ribbon{position:absolute;top:-12px;left:28px;background:var(--gold);color:var(--ink);font-size:11px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;padding:4px 12px}
+.book{aspect-ratio:3/4;max-width:240px;width:100%;margin-inline:auto;background:linear-gradient(160deg,#efe6d4,#d9cbb0);color:#1b1916;padding:22px 18px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:16px 20px 50px rgba(0,0,0,.55);transform:rotate(-3deg)}
+.book small{font-size:10px;letter-spacing:.24em;text-transform:uppercase}
+.book b{font-family:var(--f-display);font-size:34px;line-height:.98;font-weight:600}
+.book i{font-size:12px;font-style:normal;border-top:1px solid #1b1916;padding-top:8px}
+.bonus-copy{display:flex;flex-direction:column;gap:14px}
+.bonus-copy p{color:var(--muted)}
+@media (max-width:700px){.bonus{grid-template-columns:1fr}}
+
+/* how to buy */
+.buy3{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;counter-reset:b}
+.buy3 li{counter-increment:b;border:1px solid var(--line);padding:22px 20px;display:flex;flex-direction:column;gap:6px;font-size:15.5px;color:var(--muted)}
+.buy3 li::before{content:counter(b);font-family:var(--f-display);font-size:38px;line-height:1;color:var(--gold)}
+.buy3 b{color:var(--ivory);font-weight:700}
+@media (max-width:700px){.buy3{grid-template-columns:1fr}}
+
+/* calc */
+.calc{border:1px solid var(--line);padding:30px 26px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:center}
+.big{font-family:var(--f-display);font-size:clamp(38px,6.4vw,58px);line-height:1.02;color:var(--gold-2);font-variant-numeric:lining-nums}
+.rows{display:grid;font-variant-numeric:tabular-nums}
+.rows div{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);color:var(--muted)}
+.rows div span:last-child{color:var(--ivory);font-weight:700;white-space:nowrap}
+.small{font-size:14px;color:var(--dim)}
+@media (max-width:700px){.calc{grid-template-columns:1fr}}
+
+/* price */
+.price{align-items:center;text-align:center;border:1px solid var(--gold);outline:1px solid rgba(201,169,110,.2);outline-offset:-11px;padding:56px 24px;background:radial-gradient(90% 70% at 50% 0%,#2a241d 0%,var(--ink-2) 75%)}
+.amount{font-family:var(--f-display);font-size:clamp(72px,16vw,120px);line-height:.95;color:var(--gold-2);font-variant-numeric:lining-nums}
+.amount small{font-size:.38em;color:var(--gold);margin-left:8px}
+.per{color:var(--muted);font-size:16px}
+.incl{list-style:none;padding:0;margin:0;display:grid;gap:10px;text-align:left;max-width:460px;width:100%}
+.incl li{display:grid;grid-template-columns:22px 1fr;gap:10px;font-size:16px}
+.incl li::before{content:"✦";color:var(--gold);font-size:12px;padding-top:5px}
+.price .btn{min-width:min(100%,340px)}
+
+/* faq */
+.faq details{border-top:1px solid var(--line);padding:20px 0}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:16px;font-family:var(--f-display);font-size:24px;line-height:1.2}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--gold);font-family:var(--f-body);font-size:22px;line-height:1}
+.faq details[open] summary::after{content:"–"}
+.faq p{margin-top:10px;color:var(--muted);font-size:16px}
+
+.final{align-items:center;text-align:center;gap:22px}
+footer{border-top:1px solid var(--line);padding-top:26px;display:grid;gap:10px;font-size:13px;color:var(--dim)}
+footer .brand{color:var(--ivory)}
+footer .doclinks{display:flex;flex-wrap:wrap;gap:18px}
+.doc{display:none;position:fixed;inset:0;z-index:20;overflow-y:auto;background:var(--ink);padding:40px 20px calc(60px + env(safe-area-inset-bottom,0px))}
+.doc:target{display:block}
+.doc-in{max-width:720px;margin-inline:auto;display:flex;flex-direction:column;gap:12px}
+.doc h2{font-size:clamp(32px,6vw,46px);margin-top:12px}
+.doc h3{font-family:var(--f-body);font-weight:700;font-size:17px;color:var(--gold-2);margin-top:18px}
+.doc p{color:var(--ivory);font-size:15.5px;line-height:1.65}
+.doc .close{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;align-self:flex-start;border:1px solid var(--gold);padding:10px 14px;margin-block:8px}
+footer .req{border-top:1px solid var(--line);padding-top:14px;color:var(--muted);line-height:1.7}
+
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:5;background:rgba(12,11,10,.94);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center}
+.bar .btn{width:100%;max-width:740px}
+@media (min-width:900px){.bar{display:none}body{padding-bottom:40px}}
+:focus-visible{outline:2px solid var(--gold-2);outline-offset:3px}
+</style>
+</head>
+<body style="margin:0">
+
+<div class="wrap">
+  <header>
+    <a class="brand" href="#top"><div class="ms">MS</div><span>Mini Studio</span></a>
+    <nav><a href="#program">Программа</a><a href="#bonus">Бонус</a><a class="keep" href="#price">Цена</a></nav>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="hero-copy">
+      <span class="eyebrow">Онлайн-курс · Mini Studio</span>
+      <h1>Твои знания — это уже <em>продукт.</em> Осталось его продать.</h1>
+      <p class="lead">Соберём твой первый мини-продукт и блог, который продаёт его каждый день. Без съёмок, без камеры и даже без твоего лица — фото, видео и тексты сделают нейросети.</p>
+      <ul class="ticks">
+        <li>Любая тема: спорт, питание, дети, отношения, красота, хобби</li>
+        <li>Готовые промпты — копируешь и получаешь результат</li>
+        <li>Воронка и бот принимают заявки, пока ты спишь</li>
+      </ul>
+      <div class="actions">
+        <a class="btn gold" href="https://t.me/ministudio_ru_bot?start=site" target="_blank" rel="noopener">Хочу в курс · 4&nbsp;990&nbsp;₽</a>
+        <a class="btn ghost" href="#program">Смотреть программу</a>
+      </div>
+      <p class="note">Оплата в Telegram-боте · доступ сразу и навсегда</p>
+    </div>
+    <div class="phone-wrap">
+      <div>
+        <div class="phone"><div class="screen">
+          <div class="ph-top"><div class="av">MS</div><div><b>Твой блог</b><small>так будут приходить заказы</small></div></div>
+          <div class="chat">
+            <span class="step">Комментарий под Рилс</span>
+            <div class="b me">ГАЙД</div>
+            <span class="step">Автоответ в Direct · 2 сек</span>
+            <div class="b bot">Привет! 🤍 Держи гайд «Меню на неделю за 15 минут в день» <span class="k">Забрать гайд</span></div>
+            <span class="step">Твой бот в Telegram</span>
+            <div class="b tg">Оплата прошла ✨ Вот твой доступ <span class="k">Открыть</span></div>
+          </div>
+        </div></div>
+        <p class="ph-cap">Такую цепочку ты соберёшь в курсе — для своего продукта</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="facts">
+    <div><b>11</b><span>модулей от идеи до&nbsp;продаж</span></div>
+    <div><b>2</b><span>трека: без лица или с&nbsp;ИИ-аватаром</span></div>
+    <div><b>30</b><span>дней — пошаговый план запуска</span></div>
+    <div><b>∞</b><span>доступ навсегда и&nbsp;обновления</span></div>
+  </div>
+
+  <section class="narrow">
+    <div class="sec-head">
+      <span class="eyebrow">Узнаёшь себя?</span>
+      <h2>Хочется своего дохода, но&nbsp;каждый раз что-то <em>останавливает</em></h2>
+    </div>
+    <div class="pain">
+      <div>Смотрю, как другие продают гайды и курсы, и думаю: а мне-то что продавать?</div>
+      <div>Не хочу показывать лицо и говорить в камеру. А без этого, кажется, блог не взлетит.</div>
+      <div>Пробовала вести страницу, но не знаю, что постить каждый день, и бросаю через неделю.</div>
+      <div>Слышала про нейросети, но открываю ChatGPT — и не понимаю, что ему писать.</div>
+    </div>
+    <p class="turn">Знакомо? Тогда хорошая новость: <em>всё это решается системой</em>, а не талантом. Её мы и даём.</p>
+  </section>
+
+  <section class="narrow">
+    <div class="sec-head">
+      <span class="eyebrow">Что изменится</span>
+      <h2>До курса и <em>после</em></h2>
+    </div>
+    <div class="ba">
+      <div class="was"><h3>Сейчас</h3>
+        <ul><li>Непонятно, что продавать и кому</li><li>Пустой профиль и страх камеры</li><li>Часы в поисках идей для постов</li><li>Каждую заявку ловишь вручную в директе</li></ul></div>
+      <div class="now"><h3>Через 30 дней</h3>
+        <ul><li>Своя ниша и готовый мини-продукт в PDF</li><li>Красивый блог — фото и Рилс без твоего лица</li><li>Контент-план на месяц и промпты на каждый день</li><li>Автоответы и бот продают за тебя</li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head narrow" style="margin:0">
+      <span class="eyebrow">Как это работает</span>
+      <h2>Четыре шага к первым <em>продажам</em></h2>
+    </div>
+    <ol class="path">
+      <li><span class="n">I</span><b>Старт</b><p>Настраиваешь ChatGPT, выбираешь нишу и за пару дней собираешь мини-продукт: PDF, обложку, мокап.</p></li>
+      <li><span class="n">II</span><b>Свой трек</b><p>Блог без лица на любую тему или блог с ИИ-аватаром, который позирует, двигается и говорит.</p></li>
+      <li><span class="n">III</span><b>Запуск</b><p>Аккаунт, страница оплаты, контент-план и бесплатное продвижение по плану на 30 дней.</p></li>
+      <li><span class="n">IV</span><b>Автопродажи</b><p>Кодовое слово, автоответы и чат-бот: заявки и оплаты идут без твоего участия.</p></li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="sec-head narrow" style="margin:0">
+      <span class="eyebrow">Два пути — выбираешь сама</span>
+      <h2>Блог, в котором тебе <em>комфортно</em></h2>
+    </div>
+    <div class="tracks">
+      <div class="track"><span class="tag">А</span><h3>Блог без лица</h3><p>Эстетичные ИИ-фото и видео под твою тему, Рилс за 15 минут и продающие карусели. Ни одного кадра с тобой.</p></div>
+      <div class="track"><span class="tag">Б</span><h3>Блог с ИИ-аватаром</h3><p>Создаёшь свою героиню с одним лицом на всех фото: фотосессии, fashion-съёмки, видео и голос на русском.</p></div>
+    </div>
+  </section>
+
+  <section id="program">
+    <div class="sec-head narrow" style="margin:0">
+      <span class="eyebrow">Программа</span>
+      <h2>11 модулей. Ничего <em>лишнего</em></h2>
+      <p class="lead">Каждый урок — короткие шаги и готовые промпты. Нажми на модуль, чтобы увидеть уроки.</p>
+    </div>
+    <div class="prog">
+      <p class="group">Часть 1 · Общий старт</p>
+      <details class="mod"><summary><span class="code">Модуль 1</span><span class="t">Знакомство с ChatGPT</span><span class="r">Оплатишь из России и настроишь под свой блог</span><span class="plus">+</span></summary>
+        <ol><li>Регистрация и оплата российской картой</li><li>Персонализация: ChatGPT пишет как ты</li><li>SYNTX: все нейросети в одном месте</li></ol></details>
+      <details class="mod"><summary><span class="code">Модуль 2</span><span class="t">Ниша и мини-продукт</span><span class="r">От идеи до готового PDF с обложкой</span><span class="plus">+</span></summary>
+        <ol><li>ChatGPT подбирает продающую нишу</li><li>Придумываем мини-продукт</li><li>Новый аккаунт и оформление профиля</li><li>Проверяем спрос до запуска</li><li>Фирменный стиль</li><li>Текст и PDF за вечер</li><li>Обложка, мокап и картинки</li><li>Продающие тексты для Рилс и постов</li></ol></details>
+
+      <p class="group">Часть 2 · Трек А — без лица</p>
+      <details class="mod"><summary><span class="code">Модуль А1</span><span class="t">Блог без лица</span><span class="r">ИИ-фото и Рилс под любую тему</span><span class="plus">+</span></summary>
+        <ol><li>6 форматов блога без лица</li><li>ИИ-фото: промпты под твою нишу</li><li>Оживляем кадры и монтируем Рилс</li></ol></details>
+      <details class="mod"><summary><span class="code">Модуль А2</span><span class="t">Продающие карусели</span><span class="r">Формат, который сохраняют и покупают</span><span class="plus">+</span></summary>
+        <ol><li>Структура продающей карусели</li><li>Мастер-промпт для текста</li><li>Слайды в одном стиле</li></ol></details>
+
+      <p class="group">Часть 3 · Трек Б — ИИ-аватар</p>
+      <details class="mod"><summary><span class="code">Модуль Б1</span><span class="t">Твоя героиня</span><span class="r">Образ, характер и мастер-портрет</span><span class="plus">+</span></summary>
+        <ol><li>Придумываем героиню</li><li>Мастер-портрет с первого раза</li><li>Карта персонажа на 4 ракурса</li><li>9 ракурсов и эмоции</li><li>Паспорт аватара</li></ol></details>
+      <details class="mod"><summary><span class="code">Модуль Б2</span><span class="t">Лицо как на фото</span><span class="r">Живая кожа и одно лицо в любом образе</span><span class="plus">+</span></summary>
+        <ol><li>4 признака живого лица</li><li>Одно лицо в любой позе</li><li>Fashion-съёмка: аватар + одежда</li><li>Героиня в любой атмосфере</li></ol></details>
+      <details class="mod"><summary><span class="code">Модуль Б3</span><span class="t">Оживляем героиню</span><span class="r">Видео для Рилс и рекламы</span><span class="plus">+</span></summary>
+        <ol><li>Видео из фото в Kling</li><li>Видео сразу из текста</li></ol></details>
+      <details class="mod"><summary><span class="code">Модуль Б4</span><span class="t">Видео с голосом</span><span class="r">Героиня говорит по-русски</span><span class="plus">+</span></summary>
+        <ol><li>Голос в ElevenLabs</li><li>Собираем видео: фото + аудио + промпт</li><li>Мастер-промпт для Seedance 2.5</li></ol></details>
+
+      <p class="group">Часть 4 · Для всех</p>
+      <details class="mod"><summary><span class="code">Запуск</span><span class="t">Блог и продвижение</span><span class="r">План на 30 дней до первых продаж</span><span class="plus">+</span></summary>
+        <ol><li>Страница оплаты</li><li>Первые публикации и контент-план</li><li>Бесплатное продвижение</li><li>План на 30 дней</li><li>Как расти дальше</li></ol></details>
+      <details class="mod"><summary><span class="code">Воронка</span><span class="t">Автоответы на кодовое слово</span><span class="r">Заявки собираются сами</span><span class="plus">+</span></summary>
+        <ol><li>Как устроена воронка</li><li>Кодовое слово и тексты</li><li>Настраиваем автоответы</li><li>Запуск и что улучшать</li></ol></details>
+      <details class="mod"><summary><span class="code">Чат-бот</span><span class="t">Бот для продаж в Telegram</span><span class="r">Принимает оплату и выдаёт доступ</span><span class="plus">+</span></summary>
+        <ol><li>Сценарий бота через ChatGPT</li><li>Создаём бота</li><li>Собираем без программирования</li><li>Оплата и доступ в закрытый канал</li><li>Проверка и запуск</li></ol></details>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head narrow" style="margin:0">
+      <span class="eyebrow">Что ты получаешь</span>
+      <h2>Всё, чтобы <em>запуститься</em> — в одном месте</h2>
+    </div>
+    <div class="get">
+      <div><b>Сотни готовых промптов</b><span>Для фото, видео, текстов, каруселей и продаж.</span></div>
+      <div><b>Оплата из России</b><span>Как оплатить ChatGPT и нейросети российской картой.</span></div>
+      <div><b>Продукт за пару дней</b><span>Текст, PDF, обложка и мокап — в ChatGPT.</span></div>
+      <div><b>Контент без лица</b><span>Фото, видео и Рилс делают нейросети.</span></div>
+      <div><b>Продажи на автомате</b><span>Автоответы и бот работают круглосуточно.</span></div>
+      <div><b>Закрытый клуб</b><span>Уроки в Telegram, вопросы — в бот, доступ навсегда.</span></div>
+    </div>
+  </section>
+
+  <section id="bonus">
+    <div class="bonus">
+      <span class="ribbon">Бонус</span>
+      <div class="book"><small>Mini Studio · готовый продукт</small><b>Деньги из шкафа</b><i>Как продать вещи на Авито: план на 30 дней + промпты</i></div>
+      <div class="bonus-copy">
+        <h2>Готовый продукт, который можно <em>продавать сразу</em></h2>
+        <p>Полный текст гайда, продающие тексты для Рилс, карусели и автоответа, промпты для обложки и мокапа. Собираешь PDF за вечер — и у тебя уже есть что продать, пока делаешь свой продукт.</p>
+        <p>Плюс шпаргалка «100 стилей для ChatGPT» для красивых фото.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="narrow">
+    <div class="sec-head">
+      <span class="eyebrow">Считаем честно</span>
+      <h2>Сколько может приносить <em>мини-продукт</em></h2>
+    </div>
+    <div class="calc">
+      <div><div class="big">990 ₽ × 300 = 297&nbsp;000&nbsp;₽</div><p class="small" style="margin-top:12px">Цена × число покупателей. Это расчёт, а не обещание: результат зависит от темы, охватов и твоей работы.</p></div>
+      <div class="rows">
+        <div><span>20 покупателей</span><span>19 800 ₽</span></div>
+        <div><span>100 покупателей</span><span>99 000 ₽</span></div>
+        <div><span>300 покупателей</span><span>297 000 ₽</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="price narrow" id="price">
+    <span class="eyebrow">Стоимость участия</span>
+    <div class="amount">4&nbsp;990<small>₽</small></div>
+    <p class="per">Один раз — и доступ навсегда, со всеми будущими уроками</p>
+    <ul class="incl">
+      <li>11 модулей и оба трека — без лица и с ИИ-аватаром</li>
+      <li>Готовые промпты к каждому уроку</li>
+      <li>План на 30 дней до первых продаж</li>
+      <li>Бонус: готовый мини-продукт «Деньги из шкафа»</li>
+      <li>Закрытый клуб Mini Studio в Telegram</li>
+    </ul>
+    <a class="btn gold" href="https://t.me/ministudio_ru_bot?start=site" target="_blank" rel="noopener">Забронировать место</a>
+    <p class="note">Откроется Telegram-бот: оплата картой или СБП, доступ — сразу после оплаты</p>
+    <p class="note">Нажимая кнопку, вы принимаете условия <a href="#oferta">публичной оферты</a> и <a href="#privacy">политики конфиденциальности</a></p>
+  </section>
+
+  <section class="narrow">
+    <div class="sec-head">
+      <span class="eyebrow">Покупка за минуту</span>
+      <h2>Как попасть в <em>клуб</em></h2>
+    </div>
+    <ol class="buy3">
+      <li><b>Нажми «Забронировать»</b>Откроется наш бот в Telegram.</li>
+      <li><b>Оплати в боте</b>Картой или по СБП, чек придёт на почту.</li>
+      <li><b>Получи доступ</b>Бот сразу пришлёт приглашение в закрытый клуб.</li>
+    </ol>
+  </section>
+
+  <section class="faq narrow">
+    <div class="sec-head">
+      <span class="eyebrow">Вопросы</span>
+      <h2>Остались сомнения?</h2>
+    </div>
+    <div>
+      <details><summary>Мне правда не нужно показывать лицо?</summary><p>Правда. Можно вести блог без лица — на фото и видео от нейросетей — или с ИИ-аватаром. Оба пути есть в курсе.</p></details>
+      <details><summary>У меня совсем нет опыта</summary><p>Курс сделан для новичков: короткие шаги, понятные инструкции и готовые промпты, которые нужно просто скопировать.</p></details>
+      <details><summary>Какие ещё расходы понадобятся?</summary><p>Подписка ChatGPT Plus, а для видео — нейросети в SYNTX с оплатой в рублях. В первом же модуле покажем, как оплатить всё российской картой.</p></details>
+      <details><summary>Сколько времени нужно?</summary><p>Проходишь в своём темпе. Если идти по плану — 1–2 часа в день, и через 30 дней у тебя готовы продукт, блог и воронка.</p></details>
+      <details><summary>Доход гарантирован?</summary><p>Нет, и честно скажем: его не гарантирует никто. Мы даём систему и инструменты, а результат зависит от темы, охватов и твоей работы.</p></details>
+      <details><summary>Как я получу уроки?</summary><p>После оплаты бот пришлёт приглашение в закрытый Telegram-клуб Mini Studio. Там все уроки по порядку, а вопросы можно задать в боте.</p></details>
+    </div>
+  </section>
+
+  <section class="final narrow">
+    <span class="eyebrow">Mini Studio</span>
+    <h2>Через месяц у тебя может быть <em>свой продукт</em>. Или ещё один месяц «потом».</h2>
+    <a class="btn gold" href="https://t.me/ministudio_ru_bot?start=site" target="_blank" rel="noopener">Начать сегодня · 4&nbsp;990&nbsp;₽</a>
+  </section>
+
+  <footer>
+    <a class="brand" href="#top"><div class="ms">MS</div><span>Mini Studio</span></a>
+    <p>Вопросы — в бот <a href="https://t.me/ministudio_ru_bot" target="_blank" rel="noopener">@ministudio_ru_bot</a> или в Instagram <a href="https://instagram.com/ministudio_ru" target="_blank" rel="noopener">@ministudio_ru</a>.</p>
+    <p>Материалы носят информационный характер, размер дохода не гарантируется. Часть изображений и текстов создана с помощью ИИ. Условия платёжных сервисов и налоги проверяй на их сайтах.</p>
+    <p class="req">Лукашина Анна Александровна<br>ИНН 521001297401<br>Email: annalukasina84@gmail.com</p>
+    <p class="doclinks"><a href="#oferta">Публичная оферта</a><a href="#privacy">Политика конфиденциальности</a></p>
+  </footer>
+</div>
+
+<article class="doc" id="oferta">
+  <div class="doc-in">
+    <a class="close" href="#price">← Вернуться на сайт</a>
+    <h2>Публичная оферта</h2>
+    <p class="small">о заключении договора на предоставление доступа к онлайн-курсу «Mini Studio»</p>
+
+    <h3>1. Общие положения</h3>
+    <p>1.1. Настоящий документ является официальным предложением (публичной офертой) Лукашиной Анны Александровны, ИНН 521001297401, применяющей специальный налоговый режим «Налог на профессиональный доход» (далее — Исполнитель), заключить договор на изложенных ниже условиях с любым дееспособным физическим лицом (далее — Заказчик).</p>
+    <p>1.2. Акцептом оферты является оплата Заказчиком стоимости курса. С момента оплаты договор считается заключённым на условиях настоящей оферты (ст. 437, 438 ГК РФ).</p>
+    <p>1.3. Исполнитель вправе изменять условия оферты. Изменения не распространяются на договоры, заключённые до их публикации.</p>
+
+    <h3>2. Предмет договора</h3>
+    <p>2.1. Исполнитель предоставляет Заказчику доступ к онлайн-курсу «Mini Studio» (далее — Курс): обучающим материалам о создании цифрового мини-продукта и ведении блога с помощью нейросетей, а Заказчик оплачивает доступ.</p>
+    <p>2.2. Курс проходит в формате записанных материалов (текстовые уроки, промпты, изображения) без живых занятий. Заказчик изучает материалы самостоятельно, в удобном темпе.</p>
+    <p>2.3. Материалы размещаются в закрытом Telegram-канале «Mini Studio · Клуб». Доступ предоставляется бессрочно, на всё время существования канала.</p>
+
+    <h3>3. Стоимость и порядок оплаты</h3>
+    <p>3.1. Стоимость доступа к Курсу — 4 990 (четыре тысячи девятьсот девяносто) рублей. НДС не облагается.</p>
+    <p>3.2. Оплата производится через Telegram-бот @ministudio_ru_bot с помощью платёжного сервиса Prodamus банковской картой или иными доступными в нём способами.</p>
+    <p>3.3. После оплаты Заказчик получает электронный чек.</p>
+
+    <h3>4. Порядок предоставления доступа</h3>
+    <p>4.1. После поступления оплаты Telegram-бот автоматически отправляет Заказчику пригласительную ссылку в закрытый канал.</p>
+    <p>4.2. Услуга считается оказанной в момент отправки пригласительной ссылки.</p>
+    <p>4.3. Если ссылка не пришла в течение 24 часов после оплаты, Заказчику нужно написать на email Исполнителя.</p>
+
+    <h3>5. Права и обязанности сторон</h3>
+    <p>5.1. Исполнитель обязуется предоставить доступ к Курсу после оплаты и обеспечивать работу канала.</p>
+    <p>5.2. Исполнитель вправе дополнять и обновлять материалы Курса.</p>
+    <p>5.3. Заказчик обязуется не передавать доступ к Курсу третьим лицам и не копировать, не распространять и не перепродавать материалы Курса.</p>
+    <p>5.4. При нарушении п. 5.3 Исполнитель вправе закрыть доступ к Курсу без возврата денежных средств.</p>
+
+    <h3>6. Возврат денежных средств</h3>
+    <p>6.1. Заказчик вправе отказаться от Курса и получить полный возврат оплаты в течение 3 (трёх) календарных дней с момента оплаты, направив заявление на email annalukasina84@gmail.com с указанием ФИО, даты оплаты и причины отказа.</p>
+    <p>6.2. По истечении 3 дней возврат производится в порядке, установленном законодательством РФ, за вычетом фактически понесённых Исполнителем расходов.</p>
+    <p>6.3. Возврат производится тем же способом, которым была произведена оплата, в течение 10 рабочих дней с момента получения заявления. После возврата доступ к Курсу закрывается.</p>
+
+    <h3>7. Ответственность и результат</h3>
+    <p>7.1. Курс носит информационно-образовательный характер. Исполнитель не гарантирует получение Заказчиком определённого дохода: результат зависит от действий Заказчика, выбранной темы и других факторов.</p>
+    <p>7.2. Курс использует сторонние сервисы (ChatGPT, SYNTX и др.). Исполнитель не отвечает за их работу, изменение тарифов и условий.</p>
+    <p>7.3. Споры решаются путём переговоров, а при недостижении согласия — в порядке, установленном законодательством РФ.</p>
+
+    <h3>8. Интеллектуальная собственность</h3>
+    <p>8.1. Все материалы Курса являются результатом интеллектуальной деятельности Исполнителя. Заказчик получает право использовать их только для личного обучения.</p>
+
+    <h3>9. Реквизиты Исполнителя</h3>
+    <p>Лукашина Анна Александровна<br>ИНН 521001297401<br>Плательщик налога на профессиональный доход<br>Email: annalukasina84@gmail.com<br>Telegram: @ministudio_ru_bot</p>
+    <a class="close" href="#price">← Вернуться на сайт</a>
+  </div>
+</article>
+
+<article class="doc" id="privacy">
+  <div class="doc-in">
+    <a class="close" href="#price">← Вернуться на сайт</a>
+    <h2>Политика конфиденциальности</h2>
+    <p class="small">и обработки персональных данных</p>
+
+    <h3>1. Общие положения</h3>
+    <p>1.1. Политика определяет порядок обработки персональных данных пользователей сайта, Telegram-бота @ministudio_ru_bot и покупателей онлайн-курса «Mini Studio» в соответствии с Федеральным законом № 152-ФЗ «О персональных данных».</p>
+    <p>1.2. Оператор персональных данных — Лукашина Анна Александровна, ИНН 521001297401, email: annalukasina84@gmail.com.</p>
+    <p>1.3. Оплачивая курс или пользуясь ботом, пользователь даёт согласие на обработку своих персональных данных на условиях этой Политики.</p>
+
+    <h3>2. Какие данные мы обрабатываем</h3>
+    <p>Имя, адрес электронной почты, номер телефона, имя пользователя и ID в Telegram, а также данные о факте и сумме оплаты. Данные банковских карт Оператор не получает и не хранит — их обрабатывает платёжный сервис.</p>
+
+    <h3>3. Цели обработки</h3>
+    <p>Заключение и исполнение договора-оферты; предоставление доступа к курсу; отправка чека; ответы на обращения; информирование о курсе и обновлениях (от рассылки можно отказаться в любой момент).</p>
+
+    <h3>4. Передача данных третьим лицам</h3>
+    <p>Данные передаются только в объёме, нужном для оказания услуги: платёжному сервису Prodamus (приём оплаты и выдача чека), сервису ChatPlace (работа бота и автоответов), мессенджеру Telegram. Иным лицам данные не передаются, кроме случаев, предусмотренных законом.</p>
+
+    <h3>5. Хранение и защита</h3>
+    <p>Данные хранятся не дольше, чем этого требуют цели обработки, и защищаются от несанкционированного доступа. При отзыве согласия данные удаляются в течение 30 дней, если закон не требует хранить их дольше.</p>
+
+    <h3>6. Права пользователя</h3>
+    <p>Пользователь вправе узнать, какие его данные обрабатываются, потребовать их уточнения или удаления и отозвать согласие, написав на annalukasina84@gmail.com.</p>
+    <a class="close" href="#price">← Вернуться на сайт</a>
+  </div>
+</article>
+
+<div class="bar"><a class="btn gold" href="https://t.me/ministudio_ru_bot?start=site" target="_blank" rel="noopener">Хочу в курс · 4&nbsp;990&nbsp;₽</a></div>
+
+</body>
+</html>
